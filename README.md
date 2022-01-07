@@ -1,9 +1,11 @@
 # SLP_Final
 
+Proposal:
 Project Name: the Do-Nothings
 Names: Timothy Sit, Tomas Acuna, Helen Zhu
 Period: 5
 Statement: No idea
+	Possible Techinques used: Sockets, Files, Allocating memory
 Description: No idea
 Technical Description: No idea
 Timeline: Never
