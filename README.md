@@ -4,22 +4,19 @@ Proposal:
 Project Name: the Do-Nothings
 Names: Timothy Sit, Tomas Acuna, Helen Zhu
 Period: 5
-Statement: No idea
-	Possible Techinques used: Sockets, Files, Allocating memory
-Description: No idea
-Technical Description: No idea
-Timeline: Never
-    The names of the people in the group.
-    The class period you are in.
-    A statement of the problem you are solving and/or a high level description of the project.
-    A description as to how the project will be used (describe the user interface).
-    A description of your technical design. This should include:
-        How you will be using the topics covered in class in the project.
-        How you are breaking down the project and who is responsible for which parts.
-        What data structures you will be using and how.
-        What algorithms and /or data structures you will be using, and how.
-    A timeline with expected completion dates of parts of the project.
+Statement: Connecting players on two separate devices to play Connect 4.
+Description: From the terminal, a player can connect to another computer and start the game. A standard Connect 4 game board will open up on both computers.
+Technical Description:
+	Sockets to connect computers
+	Files to save games
+	Semaphores to make sure the players take turns
+	Allocating memory to create the game board.
+	The board will be a calloc() 2d array and the players will send a structure of two ints to each other representing the x,y coordinate. Every time you take a turn, you down the semaphore so you can't move. The other player takes their turn and ups your semaphore so you can make your move.
+Timeline: I don't know the specifics.
+	We'll make sure that we can program the game in the first place, then we'll connect it to another computer. Making a save file will be the last one to program.
 
 Devlog:
 Friday 7th:
 	Timothy 11:29 AM : Gathered group and started brainstorming ideas.
+Tuesday 11:
+	Timothy 9:38 PM : Discussed with group and finished proposal.
