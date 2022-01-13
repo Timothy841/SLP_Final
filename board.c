@@ -34,7 +34,7 @@ void print_hole(char player) {
   else if (player == 1) {
     printf("\U0001F534");
   }
-  else if (player == 2) {
+  else {
     printf("\U0001F535");
   }
 }

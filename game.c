@@ -2,9 +2,21 @@
 #include <stdlib.h>
 #include "board.h"
 
-int get_int() {
+int get_int(char player) {
   char input[100];
   fgets(input, sizeof input, stdin);
+  int num = atoi(input);
+  while (num < 1 || num > 7){
+    printf("Not a valid input. Try again\n");
+    if (player == 1) {
+      printf("place red piece on: ");
+    }
+    else {
+      printf("place blue piece on: ");
+    }
+    fgets(input, sizeof input, stdin);
+    num = atoi(input);
+  }
   return atoi(input);
 }
 
@@ -12,10 +24,10 @@ int do_turn_attempt(char board[6][7], char player) {
   if (player == 1) {
     printf("place red piece on: ");
   }
-  else if (player == 2) {
+  else {
     printf("place blue piece on: ");
   }
-  int c = get_int();
+  int c = get_int(player);
   int fail = place_piece(board, player, c - 1);
   if (fail) {
     printf("slot %c is full\n", c);
@@ -37,7 +49,7 @@ void play_game() {
     if (player == 1) {
       player = 2;
     }
-    else if (player == 2) {
+    else {
       player = 1;
     }
   }
