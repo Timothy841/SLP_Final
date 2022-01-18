@@ -55,7 +55,8 @@ void play_game() {
   }
 }
 
-int main() {
+/*int main() {
   play_game();
   return 0;
 }
+*/
