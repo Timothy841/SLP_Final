@@ -1,5 +1,5 @@
 #include "networking.h"
-
+#include "board.h"
 void process(char *s);
 void subserver(int from_client);
 
@@ -14,19 +14,21 @@ int main() {
 
 void subserver(int client_socket) {
   char buffer[BUFFER_SIZE];
-
-  while (read(client_socket, buffer, sizeof(buffer))) {
-
+  char board[6][7];//create board
+  clear_board(board);//clear it
+  print_board(board);//print clean board
+  while (read(client_socket, buffer, sizeof(buffer))) {//receive input
+	print_board(board);//print input on board;
     printf("[subserver %d] received: [%s]\n", getpid(), buffer);
-    process(buffer);
-    write(client_socket, buffer, sizeof(buffer));
+    process(buffer);//do server input
+    write(client_socket, buffer, sizeof(buffer));//give input to client
   }//end read loop
   close(client_socket);
   exit(0);
 }
 
 void process(char * s) {
-  while (*s) {
+	while (*s) {
     if (*s >= 'a' && *s <= 'z')
       *s = ((*s - 'a') + 13) % 26 + 'a';
     else  if (*s >= 'A' && *s <= 'Z')
