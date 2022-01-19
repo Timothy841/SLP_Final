@@ -41,3 +41,11 @@ Timothy 9:38 PM : Discussed with group and finished proposal.
 Monday 17th:
 
 Timothy 9:32 PM : Added forking server and client code in. Changed forking server to only accept one client at a time. Any other clients have to wait. Just have to connect server/client to game.
+
+Tuesday 18th:
+
+Timothy 11:13 AM : Not enough changed to justify writing
+
+Wednesday 19th:
+
+Timothy 11:13 AM : Not much
