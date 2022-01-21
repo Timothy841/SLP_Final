@@ -41,13 +41,13 @@ void do_turn(char board[6][7], char player) {
 
 void show_result(char winner) {
   if (winner == 0) {
-    printf("The game is a tie!");
+    printf("The game is a tie!\n");
   }
   else if (winner == 1) {
-    printf("Player 1 wins!")'
+    printf("Red wins!\n");
   }
-  else if (winnner == 2) {
-    printf("Player 2 wins!");
+  else if (winner == 2) {
+    printf("Blue wins!\n");
   }
 }
 
@@ -67,6 +67,7 @@ void play_game() {
       player = 1;
     }
   }
+  show_result(winner);
 }
 
 int main() {

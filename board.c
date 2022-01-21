@@ -58,20 +58,6 @@ void print_board(char board[6][7]) {
   }
 }
 
-int check_hole(char board[6][7], char *last, int *consec, int r, int c) {
-  if (board[r][c] == *last) {
-    (*consec) ++;
-    if (*consec >= 4) {
-      return 1;
-    }
-  }
-  else {
-    *last = board[r][c];
-    *consec = 1;
-  }
-  return 0;
-}
-
 char get_winner(char board[6][7]) {
   char last;
   int consec;
@@ -79,17 +65,15 @@ char get_winner(char board[6][7]) {
     last = 0;
     consec = 0;
     for (int c = 0; real_col(c); c ++) {
-      if (check_hole(board, &last, &consec, r, c)) {
-        return last;
+      if (last && last == board[r][c]) {
+        consec ++;
+        if (consec >= 4) {
+          return last;
+        }
       }
-    }
-  }
-  for (int c = 0; real_col(c); c ++) {
-    last = 0;
-    consec = 0;
-    for (int r = 0; real_row(r); r ++) {
-      if (check_hole(board, &last, &consec, r, c)) {
-        return last;
+      else {
+        last = board[r][c];
+        consec = 1;
       }
     }
   }
