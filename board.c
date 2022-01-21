@@ -58,23 +58,38 @@ void print_board(char board[6][7]) {
   }
 }
 
-char get_winner(char board[6][7]) {
+char check_winner(char board[6][7], int r, int c, int dr, int dc) {
   char last;
-  int consec;
+  char consec;
+  while (real_row(r) && real_col(c)) {
+    if(last && last == board[r][c]) {
+      consec ++;
+      if (consec >= 4) {
+        return last;
+      }
+    }
+    else {
+      last = board[r][c];
+      consec = 1;
+    }
+    r += dr;
+    c += dc;
+  }
+  return 0;
+}
+
+
+char get_winner(char board[6][7]) {
   for (int r = 0; real_row(r); r ++) {
-    last = 0;
-    consec = 0;
-    for (int c = 0; real_col(c); c ++) {
-      if (last && last == board[r][c]) {
-        consec ++;
-        if (consec >= 4) {
-          return last;
-        }
-      }
-      else {
-        last = board[r][c];
-        consec = 1;
-      }
+    char winner = check_winner(board, r, 0, 0, 1);
+    if (winner) {
+      return winner;
+    }
+  }
+  for (int c = 0; real_col(c); c ++) {
+    char winner = check_winner(board, 0, c, 1, 0);
+    if (winner) {
+      return winner;
     }
   }
   return 0;
