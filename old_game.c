@@ -67,6 +67,7 @@ void play_game() {
       player = 1;
     }
   }
+  print_board(board);
   show_result(winner);
 }
 
