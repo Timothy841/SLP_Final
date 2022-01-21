@@ -12,7 +12,7 @@ int get_int(char player) {
       printf("place red piece on: ");
     }
     else {
-      printf("place blue piece on: ");
+      printf("place yellow piece on: ");
     }
     fgets(input, sizeof input, stdin);
     num = atoi(input);
@@ -47,7 +47,7 @@ void show_result(char winner) {
     printf("Red wins!\n");
   }
   else if (winner == 2) {
-    printf("Blue wins!\n");
+    printf("Yellow wins!\n");
   }
 }
 

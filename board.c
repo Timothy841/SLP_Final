@@ -44,7 +44,7 @@ void print_hole(char player) {
     printf("\U0001F534");
   }
   else {
-    printf("\U0001F535");
+    printf("\U0001F7E1");
   }
 }
 
