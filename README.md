@@ -32,11 +32,11 @@ Devlog:
 
 Friday 7th:
 
-Timothy 11:29 AM : Gathered group and started brainstorming ideas.
+Timothy, Tomas, Helen 11:29 AM : Gathered group and started brainstorming ideas.
 
 Tuesday 11th:
 
-Timothy 9:38 PM : Discussed with group and finished proposal.
+Timothy, Tomas, Helen 9:38 PM : Discussed with group and finished proposal.
 
 Monday 17th:
 

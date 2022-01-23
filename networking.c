@@ -183,12 +183,12 @@ void print_hole(char player) {
     printf("\U0001F534");//player 1, server
   }
   else {
-    printf("\U0001F7E1");//player 2, client
+    printf("\U0001F535");//player 2, client
   }
 }
 
 void print_board(char board[6][7]) {
-  printf("0 1 2 3 4 5 6 6 \n");
+  printf("0 1 2 3 4 5 6 \n");
   for (int r = 0; real_row(r); r ++) {
     for (int c = 0; real_col(c); c ++) {
       print_hole(board[r][c]);
@@ -245,6 +245,22 @@ char get_winner(char board[6][7]) {
     char winner = check_winner(board, 0, c, 1, 0);
     if (winner) {
       return winner;
+    }
+  }
+  for (int r = 0; real_row(r); r ++) {
+    for (int c = 0; real_col(c); c ++) {
+      char winner = check_winner(board, r, c, 1, 1);
+      if (winner) {
+        return winner;
+      }
+    }
+  }
+  for (int r = 0; real_row(r); r ++) {
+    for (int c = 0; real_col(c); c ++) {
+      char winner = check_winner(board, r, c, -1, 1);
+      if (winner) {
+        return winner;
+      }
     }
   }
   return -1;
