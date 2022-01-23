@@ -183,7 +183,7 @@ void print_hole(char player) {
     printf("\U0001F534");//player 1, server
   }
   else {
-    printf("\U0001F535");//player 2, client
+    printf("\U0001F7E1");//player 2, client
   }
 }
 
