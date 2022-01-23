@@ -118,7 +118,7 @@ int client_setup(char * server) {
   return sd;
 }
 
-int convert_int(char *buffer){
+int convert_int(char *buffer){//get the buffer and convert it to int. Doesn't need to check if it is valid because get_int does that
 	int num = atoi(buffer);
 	if (num < 0 || num > 6){
 		printf("Not valid move from opponent\n");
@@ -134,9 +134,9 @@ int get_int(char *buffer, char player) {
     printf("place yellow piece on: ");
   }
   fgets(buffer, sizeof buffer, stdin);
-  *strchr(buffer, '\n') = 0;
+  *strchr(buffer, '\n') = 0;//if only \n in buffer, make it 0
   int num = atoi(buffer);
-  if (strlen(buffer) == 0){
+  if (strlen(buffer) == 0){//make \n not work
     num = -1;
   }
   while (num < 0 || num > 6){
@@ -148,7 +148,11 @@ int get_int(char *buffer, char player) {
       printf("place yellow piece on: ");
     }
     fgets(buffer, sizeof buffer, stdin);
-    num = atoi(buffer);
+    *strchr(buffer, '\n') = 0;//if only \n in buffer, make it 0
+    int num = atoi(buffer);
+    if (strlen(buffer) == 0){//make \n not work
+      num = -1;
+    }
   }
   return atoi(buffer);
 }
@@ -173,10 +177,10 @@ int place_piece(char board[6][7], char player, int c) {
 
 void print_hole(char player) {
   if (player == 0) {
-    printf("\U0001F518");
+    printf("\U0001F518");//empty hole
   }
   else if (player == 1) {
-    printf("\U0001F534");
+    printf("\U0001F534");//player 1, server
   }
   else {
     printf("\U0001F7E1");//player 2, client
@@ -269,10 +273,10 @@ void end_game_server(int winner, char board[6][7], int client_socket){
 }
 
 void end_game_client(int winner, char board[6][7], int server_socket){
-  winner = full(board);
-  winner = get_winner(board);
-  show_result(winner);
-  if (winner != -1){
+  winner = full(board);//check if tie
+  winner = get_winner(board);//check for winner
+  show_result(winner);//print out winner
+  if (winner != -1){//end game
     close(server_socket);
     exit(0);
   }
