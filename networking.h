@@ -11,6 +11,7 @@
 #include <string.h>
 #include <errno.h>
 #include <ifaddrs.h>
+#include <signal.h>
 
 #ifndef NETWORKING_H
 #define NETWORKING_H

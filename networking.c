@@ -119,23 +119,6 @@ int client_setup(char * server) {
 }
 
 int convert_int(char board[6][7], char *buffer, int opponent_socket, char *history){//get the buffer and convert it to int. Doesn't need to check if it is valid because get_int does that
-  if (!strcmp(buffer, "l")){//load
-    clear_board(board);
-    int player = 2;
-    char move[5];
-    while (read(opponent_socket, move, sizeof move)){
-      int m = atoi(move-49);
-      place_piece(board, player, m);//place piece
-      if (player == 2){
-        player = 1;
-      }
-      else{
-        player = 2;
-      }
-    }
-    print_board(board);
-    return 0;
-  }
 	int num = atoi(buffer);
 	if (num < 1 || num > 7){
 		printf("Not valid move from opponent\n");
@@ -158,8 +141,7 @@ int get_int(char board[6][7], char *buffer, char player, int opponent_socket, ch
     num = -1;
   }
   while (num < 1 || num > 7){
-    if (strcmp(buffer, "ls") && strcmp(buffer, "save") && strcmp(buffer, "load")){
-      printf("%s\n", buffer);
+    if (strcmp(buffer, "ls") && strcmp(buffer, "save")){
       printf("Not a valid input. Try again\n");
     }
     if (player == 1) {
@@ -244,41 +226,6 @@ void print_saves(char board[6][7], char *buffer, int opponent_socket, char *hist
       strcat(name, ".txt");
       int fd = open(name, O_WRONLY | O_CREAT, 0644);
       write(fd, history, sizeof history);
-      close(opponent_socket);
-      close(fd);
-      exit(0);
-    }
-    else{
-      int status;
-      int a = waitpid(-1, &status, 0);
-    }
-  }
-  else if (!strcmp(buffer, "load")){//it is save
-    int f = fork();
-    if (!f){//child
-      char name[BUFFER_SIZE];
-      printf("Which save would you like to load: ");
-      fgets(name, sizeof name, stdin);
-      *strchr(name, '\n') = 0;
-      strcat(name, ".txt");
-      int fd = open(name, O_RDONLY);
-      read(fd, history, BUFFER_SIZE);
-      char *load = "l";
-      write(opponent_socket, load, sizeof load);
-      printf("%s\n", history);
-      clear_board(board);
-      int player = 2;
-      for (int i = 0; i<strlen(history); i+=2){
-    		place_piece(board, player, history[i]-49);//place piece
-        write(opponent_socket, &history[i], sizeof history[i]);
-        if (player == 2){
-          player = 1;
-        }
-        else{
-          player = 2;
-        }
-      }
-      print_board(board);
       close(opponent_socket);
       close(fd);
       exit(0);
