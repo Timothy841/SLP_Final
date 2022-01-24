@@ -119,7 +119,10 @@ int client_setup(char * server) {
 }
 
 int convert_int(char board[6][7], char *buffer, int opponent_socket, char *history){//get the buffer and convert it to int. Doesn't need to check if it is valid because get_int does that
-	int num = atoi(buffer);
+  if (strlen(buffer) == 0){
+    return -1;
+  }
+  int num = atoi(buffer);
 	if (num < 1 || num > 7){
 		printf("Not valid move from opponent\n");
 	}

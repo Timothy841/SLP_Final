@@ -36,7 +36,7 @@ void subserver(int opponent_socket) {
   	else{
       read(opponent_socket, buffer, sizeof(buffer));//read opponent move
       int move = convert_int(board, buffer, opponent_socket, history);//convert to int
-      if (move == 0){
+      if (move == -1){
         printf("Game ended\n");
         exit(0);
       }

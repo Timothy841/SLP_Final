@@ -72,8 +72,6 @@ Problems:
 
 No ability to load a game
 
-Ending a game does not automatically end it for the opponent. ie, signals are not handled.
-
 Final techniques used:
 
 	Sockets to connect computers
