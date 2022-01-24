@@ -1,44 +1,51 @@
 #include "networking.h"
 
-void subserver(int from_client);
+void subserver(int from_opponent);
 
 int main() {
 
   int listen_socket;
   int f;
   listen_socket = server_setup();
-  int client_socket = server_connect(listen_socket);
-  subserver(client_socket);
+  int opponent_socket = server_connect(listen_socket);
+  subserver(opponent_socket);
 }
 
-void subserver(int client_socket) {
+void subserver(int opponent_socket) {
   char buffer[BUFFER_SIZE];
+  char *history = calloc(200,1);
   int player = 2;
   int winner = -1;
   char board[6][7];//create board
   clear_board(board);//clear it
+  printf("Type in {0, 1, 2, 3, 4, 5, 6} to put your piece on the board. Type in {ls} to see all save files. Type {save} to save. Type {load} to load a file.\n");
   print_board(board);//print clean board
   while (1){
   	if (player == 1){
-  		int move = get_int(buffer, player);//get input to write
-  		int fail = place_piece(board, player, move);//see if move fails
+  		int move = get_int(board, buffer, player, opponent_socket, history);//get input to write
+  		int fail = place_piece(board, player, move-1);//see if move fails
   		if (fail){
   			continue;//start over, new move
   		}
   		print_board(board);
-    	write(client_socket, buffer, sizeof(buffer));//give input to opponent
-      end_game_server(winner, board, client_socket);
+    	write(opponent_socket, buffer, sizeof(buffer));//give input to opponent
+      strcat(history, strcat(buffer, "\n"));
+      end_game(winner, board, opponent_socket);
       player = 2;
   	}
   	else{
-      read(client_socket, buffer, sizeof(buffer));//read opponent move
-      int move = convert_int(buffer);//convert to int
-      place_piece(board, player, move);//place piece
+      read(opponent_socket, buffer, sizeof(buffer));//read opponent move
+      int move = convert_int(board, buffer, opponent_socket, history);//convert to int
+      if (move == 0){
+        continue;
+      }
+      strcat(history, strcat(buffer, "\n"));
+      place_piece(board, player, move-1);//place piece
       print_board(board);
-      end_game_server(winner, board, client_socket);
+      end_game(winner, board, opponent_socket);
       player = 1;
   	}
   }
-  close(client_socket);
+  close(opponent_socket);
   exit(0);
 }

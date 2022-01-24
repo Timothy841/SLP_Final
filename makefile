@@ -1,20 +1,10 @@
+all: server client
 
-all: server client clean
+server: forking_server.c networking.c
+	gcc -o server forking_server.c networking.c networking.h
 
-server: server.o networking.o
-	gcc -o server forking_server.o networking.o
-
-client: client.o networking.o
-	gcc -o client client.o networking.o
-
-server.o: forking_server.c networking.h
-	gcc -c forking_server.c
-
-client.o: client.c networking.h
-	gcc -c client.c
-
-networking.o: networking.c networking.h
-	gcc -c networking.c
+client: client.c networking.c
+	gcc -o client client.c networking.c networking.h
 
 clean:
 	rm *.o
