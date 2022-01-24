@@ -48,8 +48,9 @@ Timothy : Connect server/client to games
 
 Sunday 8:26 PM: Fixed bugs between server and client. Implemented ls and save files. Unable to implement loading.
 
-
-
+|
+|
+|
 
 Final Version:
 
