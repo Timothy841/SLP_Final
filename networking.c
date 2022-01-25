@@ -119,10 +119,28 @@ int client_setup(char * server) {
 }
 
 int convert_int(char board[6][7], char *buffer, int opponent_socket, char *history){//get the buffer and convert it to int. Doesn't need to check if it is valid because get_int does that
+  if (!strcmp(buffer, "l")){//load
+    clear_board(board);
+    int player = 2;
+    int h;
+    read(opponent_socket, history, 200);
+    for (int i = 0; i<strlen(history); i+=2){
+      h = history[i]-49;
+  		place_piece(board, player, h);//place piece
+      if (player == 2){
+        player = 1;
+      }
+      else{
+        player = 2;
+      }
+    }
+    print_board(board);
+    return 0;
+  }
   if (strlen(buffer) == 0){
     return -1;
   }
-  int num = atoi(buffer);
+	int num = atoi(buffer);
 	if (num < 1 || num > 7){
 		printf("Not valid move from opponent\n");
 	}
@@ -144,7 +162,7 @@ int get_int(char board[6][7], char *buffer, char player, int opponent_socket, ch
     num = -1;
   }
   while (num < 1 || num > 7){
-    if (strcmp(buffer, "ls") && strcmp(buffer, "save")){
+    if (strcmp(buffer, "ls") && strcmp(buffer, "save") && strcmp(buffer, "load")){
       printf("Not a valid input. Try again\n");
     }
     if (player == 1) {
@@ -220,23 +238,43 @@ void print_saves(char board[6][7], char *buffer, int opponent_socket, char *hist
     }
   }
   else if (!strcmp(buffer, "save")){//it is save
-    int f = fork();
-    if (!f){//child
-      char name[BUFFER_SIZE];
-      printf("What name would you like to give your save: ");
-      fgets(name, sizeof name, stdin);
-      *strchr(name, '\n') = 0;
-      strcat(name, ".txt");
-      int fd = open(name, O_WRONLY | O_CREAT, 0644);
-      write(fd, history, sizeof history);
-      close(opponent_socket);
-      close(fd);
-      exit(0);
+    char name[BUFFER_SIZE];
+    printf("What name would you like to give your save: ");
+    fgets(name, sizeof name, stdin);
+    *strchr(name, '\n') = 0;
+    strcat(name, ".txt");
+    int fd = open(name, O_WRONLY | O_CREAT, 0644);
+    write(fd, history, strlen(history));
+    close(fd);
+  }
+  else if (!strcmp(buffer, "load")){//it is save
+    memset(history, 0, 200);
+    char name[BUFFER_SIZE];
+    printf("Which save would you like to load: ");
+    fgets(name, sizeof name, stdin);
+    *strchr(name, '\n') = 0;
+    strcat(name, ".txt");
+    int fd = open(name, O_RDONLY);
+    read(fd, history, 200);
+    char *load = "l";
+    write(opponent_socket, load, strlen(load));
+    sleep(1);
+    write(opponent_socket, history, strlen(history));
+    clear_board(board);
+    int player = 2;
+    int h;
+    for (int i = 0; i<strlen(history); i+=2){
+      h = history[i]-49;
+  		place_piece(board, player, h);//place piece
+      if (player == 2){
+        player = 1;
+      }
+      else{
+        player = 2;
+      }
     }
-    else{
-      int status;
-      int a = waitpid(-1, &status, 0);
-    }
+    print_board(board);
+    close(fd);
   }
 }
 

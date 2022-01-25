@@ -18,7 +18,7 @@ void subserver(int opponent_socket) {
   int winner = -1;
   char board[6][7];//create board
   clear_board(board);//clear it
-  printf("Type in {0, 1, 2, 3, 4, 5, 6} to put your piece on the board. Type in {ls} to see all save files. Type {save} to save. To see save files, open text editors\n");
+  printf("Type in {0, 1, 2, 3, 4, 5, 6} to put your piece on the board. Type in {ls} to see all save files. Type {save} to save. Type {load} to load a save. Don't {load} twice in the same game.\n");
   print_board(board);//print clean board
   while (1){
   	if (player == 1){
@@ -29,7 +29,7 @@ void subserver(int opponent_socket) {
   		}
   		print_board(board);
     	write(opponent_socket, buffer, sizeof(buffer));//give input to opponent
-      strcat(history, strcat(buffer, "\n"));
+      strcat(history, strcat(buffer, ","));
       end_game(winner, board, opponent_socket);
       player = 2;
   	}
@@ -40,7 +40,10 @@ void subserver(int opponent_socket) {
         printf("Game ended\n");
         exit(0);
       }
-      strcat(history, strcat(buffer, "\n"));
+      else if (move == 0){
+        continue;
+      }
+      strcat(history, strcat(buffer, ","));
       place_piece(board, player, move-1);//place piece
       print_board(board);
       end_game(winner, board, opponent_socket);

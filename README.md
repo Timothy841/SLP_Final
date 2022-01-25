@@ -48,6 +48,8 @@ Timothy : Connect server/client to games
 
 Sunday 8:26 PM: Fixed bugs between server and client. Implemented ls and save files. Unable to implement loading.
 
+Monday 9:33 PM : Implemented load. Can't load twice in the same game though.
+
 |
 |
 |
@@ -66,11 +68,11 @@ Libraries: None required
 
 Instructions:
 
-Use two different computers, or two terminals on the same computer. First use make to get all the code ready. Then, on one computer, type ./server and on the other, type ./client. The game will start. The client will go first, then the server. Type save and then a name for the save file to save the current game. Type ls to view all save files. I was not able to implement load, there were two many bugs to handle.
+Use two different computers, or two terminals on the same computer. First use make to get all the code ready. Then, on one computer, type ./server and on the other, type ./client. The game will start. The client will go first, then the server. Type save and then a name for the save file to save the current game. Type ls to view all save files. Type load to load a save.
 
 Problems:
 
-No ability to load a game
+Can't load twice in a game. It will break the game.
 
 Final techniques used:
 
@@ -78,6 +80,6 @@ Final techniques used:
 
 	Files to save games
 
-	Processes to use ls and save
+	Processes to use ls and save and load
 
 	Allocating memory to create the game board and other variables
