@@ -38,7 +38,7 @@ int real_col(int c);
 int place_piece(char board[6][7], char player, int c);
 void print_hole(char player);
 void print_board(char board[6][7]);
-void print_saves(char board[6][7], char *buffer, int opponent_socket, char *history);
+int print_saves(char board[6][7], char *buffer, int opponent_socket, char *history);
 void clear_board(char board[6][7]);
 int full(char board[6][7]);
 char check_winner(char board[6][7], int r, int c, int dr, int dc);
